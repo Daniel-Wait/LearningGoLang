@@ -5,6 +5,8 @@ import (
 	"net"
 )
 
+var client_map map[string]net.Conn
+
 func main() {
 	// Listen for incoming connections
 	listener, err := net.Listen("tcp", "localhost:8080")
@@ -15,6 +17,9 @@ func main() {
 	defer listener.Close()
 
 	fmt.Println("Server is listening on port 8080")
+
+	// Create Clients map
+	client_map = make(map[string]net.Conn)
 
 	for {
 		// Accept incoming connections
@@ -33,7 +38,13 @@ func handleClient(conn net.Conn) {
 	defer conn.Close()
 
 	// Show who is connecting
-	fmt.Printf("Connection from: %s\n", conn.RemoteAddr())
+	tcp_addr := fmt.Sprintf("%s", conn.RemoteAddr())
+	fmt.Printf("Connection from: %s\n", tcp_addr)
+	_, found := client_map[tcp_addr]
+	if found == false {
+		client_map[tcp_addr] = conn
+	}
+	defer delete(client_map, tcp_addr)
 
 	// Create a buffer to read data into
 	buffer := make([]byte, 1024)
@@ -46,9 +57,13 @@ func handleClient(conn net.Conn) {
 			return
 		}
 
-		// Process and use the data (here, we'll just print it)
+		// Process and use the data
 		newmessage := fmt.Sprintf("%s: %s\n", conn.RemoteAddr(), buffer[:n])
 		fmt.Printf(newmessage)
-		conn.Write([]byte(newmessage + "\n"))
+		for map_addr, map_conn := range client_map {
+			if map_addr != tcp_addr {
+				map_conn.Write([]byte(newmessage + "\n"))
+			}
+		}
 	}
 }
