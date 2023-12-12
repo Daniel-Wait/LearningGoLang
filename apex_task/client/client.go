@@ -26,7 +26,6 @@ func main() {
 			reader := bufio.NewReader(os.Stdin)
 			fmt.Print("Enter text: ")
 			text, _ := reader.ReadString('\n')
-			fmt.Println(text)
 			_, err := fmt.Fprintf(conn, text)
 			if err != nil {
 				fmt.Println("Error:", err)
@@ -47,7 +46,9 @@ func main() {
 				fmt.Println("Error:", err)
 				break
 			}
-			fmt.Println(string(buffer[:n]))
+			fmt.Print("\n")                 // Add EOL
+			fmt.Print("\033[1A\033[K")      // Clear previous line
+			fmt.Println(string(buffer[:n])) // Print data
 		}
 		wg.Done()
 	}
