@@ -7,6 +7,9 @@ https://docs.docker.com/language/golang/build-images/
 Multiple Golang containers
 https://stackoverflow.com/questions/57646760/communicating-multiple-containers-running-golang
 
+Docker comms
+https://www.tutorialworks.com/container-networking/
+
 Go Maps
 https://go.dev/blog/maps
 
