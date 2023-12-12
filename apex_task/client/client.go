@@ -36,9 +36,25 @@ func main() {
 		}
 		wg.Done()
 	}
+
+	tread := func(wg *sync.WaitGroup) {
+		// Create a buffer to read data into
+		buffer := make([]byte, 1024)
+		for {
+			// Read data from the client
+			n, err := conn.Read(buffer)
+			if err != nil {
+				fmt.Println("Error:", err)
+				break
+			}
+			fmt.Println(string(buffer[:n]))
+		}
+		wg.Done()
+	}
 	// Read and process data from the server
 	// ...
-	wg.Add(1)
+	wg.Add(2)
 	go tsend(wg)
+	go tread(wg)
 	wg.Wait()
 }

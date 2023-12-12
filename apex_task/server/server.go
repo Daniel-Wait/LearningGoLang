@@ -47,6 +47,8 @@ func handleClient(conn net.Conn) {
 		}
 
 		// Process and use the data (here, we'll just print it)
-		fmt.Printf("%s: %s\n", conn.RemoteAddr(), buffer[:n])
+		newmessage := fmt.Sprintf("%s: %s\n", conn.RemoteAddr(), buffer[:n])
+		fmt.Printf(newmessage)
+		conn.Write([]byte(newmessage + "\n"))
 	}
 }
