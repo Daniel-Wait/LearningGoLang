@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"sync"
 	"time"
 )
 
@@ -19,14 +20,25 @@ func main() {
 
 	// Send data to the server
 	// ...
-	for {
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Enter text: ")
-		text, _ := reader.ReadString('\n')
-		fmt.Println(text)
-		fmt.Fprintf(conn, text)
-		time.Sleep(100 * time.Millisecond)
+	wg := &sync.WaitGroup{}
+	tsend := func(wg *sync.WaitGroup) {
+		for {
+			reader := bufio.NewReader(os.Stdin)
+			fmt.Print("Enter text: ")
+			text, _ := reader.ReadString('\n')
+			fmt.Println(text)
+			_, err := fmt.Fprintf(conn, text)
+			if err != nil {
+				fmt.Println("Error:", err)
+				break
+			}
+			time.Sleep(100 * time.Millisecond)
+		}
+		wg.Done()
 	}
 	// Read and process data from the server
 	// ...
+	wg.Add(1)
+	go tsend(wg)
+	wg.Wait()
 }
