@@ -15,9 +15,7 @@ COPY *.go ./
 
 
 # Build
-RUN go build -o /docker-client
-
-EXPOSE 8080
+RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-client
 
 # Run
 CMD ["/docker-client"]
