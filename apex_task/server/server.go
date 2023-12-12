@@ -60,10 +60,10 @@ func handleClient(conn net.Conn) {
 		// Process and use the data
 		newmessage := fmt.Sprintf("%s: %s", conn.RemoteAddr(), buffer[:n])
 		fmt.Printf(newmessage)
-		for map_addr, map_conn := range client_map {
-			if map_addr != tcp_addr {
-				map_conn.Write([]byte(newmessage))
-			}
+		for _, map_conn := range client_map {
+			// if _ != tcp_addr {
+			// }
+			map_conn.Write([]byte(newmessage))
 		}
 	}
 }
