@@ -1,14 +1,14 @@
 TCP server
 https://okanexe.medium.com/the-complete-guide-to-tcp-ip-connections-in-golang-1216dae27b5a
 
-UDP server
-https://www.golinuxcloud.com/golang-udp-server-client/
-
 Go Docker
 https://docs.docker.com/language/golang/build-images/
 
 Multiple Golang containers
 https://stackoverflow.com/questions/57646760/communicating-multiple-containers-running-golang
 
-Docker comms
-https://www.tutorialworks.com/container-networking/
+Go Maps
+https://go.dev/blog/maps
+
+Go Clearing Console outputs
+https://groups.google.com/g/golang-nuts/c/k6l_LhI8CO0
