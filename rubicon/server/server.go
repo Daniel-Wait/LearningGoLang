@@ -32,6 +32,9 @@ func main() {
 func handleClient(conn net.Conn) {
 	defer conn.Close()
 
+	// Show who is connecting
+	fmt.Printf("Connection from: %s\n", conn.RemoteAddr())
+
 	// Create a buffer to read data into
 	buffer := make([]byte, 1024)
 
@@ -44,6 +47,6 @@ func handleClient(conn net.Conn) {
 		}
 
 		// Process and use the data (here, we'll just print it)
-		fmt.Printf("Received: %s\n", buffer[:n])
+		fmt.Printf("%s: %s\n", conn.RemoteAddr(), buffer[:n])
 	}
 }
