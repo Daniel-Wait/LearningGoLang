@@ -13,6 +13,13 @@ RUN go mod download
 # https://docs.docker.com/engine/reference/builder/#copy
 COPY *.go ./
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+iproute2 \
+# ifconfig \
+iputils-ping \
+&& \
+apt-get clean && \
+rm -rf /var/lib/apt/lists/*
 
 # Build
 RUN CGO_ENABLED=0 GOOS=linux go build -o /docker-client
