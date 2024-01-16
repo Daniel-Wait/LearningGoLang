@@ -15,12 +15,12 @@ The image ___apex_task\windows_3xClients_test.png___ shows the server interactin
 
 ## Docker Container Communication
 
-I failed to get this part working. From what I could understand I needed to use the bridge (default) for the network.
+Start the server first on the Bridge Network such that it shall default to IP address 172.17.0.2
 
-> docker build -t apex:server -f Dockerfile . \
-> docker build -t apex:client -f Dockerfile . \
+In terminal #1
+> cd server; docker build -t apex:server -f Dockerfile . \
 > docker run -it --net=bridge apex:server \
-> docker run -it --net=bridge apex:client
 
-Before the above I simply tried to get the server working.
-Exposing server port 8080 and using CMD for the client, I would get an EOF and then error connecting to 8080.
+In terminal #2
+> cd client; docker build -t apex:client -f Dockerfile . \
+> docker run -it --net=bridge apex:client

@@ -11,7 +11,7 @@ import (
 
 func main() {
 	// Connect to the server
-	conn, err := net.Dial("tcp", "localhost:8080")
+	conn, err := net.Dial("tcp", "172.17.0.2:8080")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return

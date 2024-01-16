@@ -9,7 +9,7 @@ var client_map map[string]net.Conn
 
 func main() {
 	// Listen for incoming connections
-	listener, err := net.Listen("tcp", "localhost:8080")
+	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
